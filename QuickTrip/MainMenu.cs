@@ -1,24 +1,15 @@
-﻿using System.ComponentModel;
+﻿using QuickTrip.Utilities.Enums;
+using System.ComponentModel;
 using System.Text;
 
 namespace QuickTrip;
 
-public class MainMenu
+public class MainMenu : Menu<MainMenuOptions>
 {
     public MainMenu()
     {
         _option = MainMenuOptions.None;
         _module = null;
-    }
-
-    private enum MainMenuOptions //add new menu options to ExecuteSelection() method
-    {
-        None = 0,
-        [Description("Manage Districts/Stores")] ManageProperty,
-        [Description("Manage Employees")] HR,
-        [Description("Enter Sales")] EnterSales,
-        [Description("Reports")] Reports,
-        Exit,
     }
 
     private MainMenuOptions _option;
@@ -28,7 +19,7 @@ public class MainMenu
     {
         while (true)
         {
-            ShowOptions();
+            ShowMenuOptions();
             GetSelection();
             if (_option == MainMenuOptions.Exit) { break; }
             ExecuteSelection();
@@ -74,18 +65,5 @@ public class MainMenu
                 break;
             }
         }
-    }
-
-    private void ShowOptions()
-    {
-        var bldr = new StringBuilder();
-
-        foreach (var option in Enum.GetValues<MainMenuOptions>())
-        {
-            if ((int)option == 0) continue;
-            bldr.AppendLine($" {(int)option}. {option.DisplayName()}");
-        }
-
-        Console.WriteLine(bldr);
     }
 }
